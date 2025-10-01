@@ -1,0 +1,265 @@
+﻿@{
+    ViewBag.Title = "Sistema de Gestión de Tareas";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>¡Éxito!</strong> @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="jumbotron bg-light rounded-lg shadow-sm">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="text-center">
+            <h1 class="display-4 text-primary">🎉 ¡Bienvenido/a, @ViewBag.NombreUsuario!</h1>
+            <p class="lead mt-3">Tu centro de control para gestionar tareas y proyectos eficientemente</p>
+
+            <!-- Estadísticas rápidas -->
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <div class="card border-primary">
+                        <div class="card-body text-center">
+                            <h2 class="text-primary">@(ViewBag.TareasPendientes?.Count ?? 0)</h2>
+                            <p class="card-text">Tareas Pendientes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-success">
+                        <div class="card-body text-center">
+                            <h2 class="text-success">0</h2>
+                            <p class="card-text">Proyectos Activos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info">
+                        <div class="card-body text-center">
+                            <h2 class="text-info">0</h2>
+                            <p class="card-text">Equipos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-warning">
+                        <div class="card-body text-center">
+                            <h2 class="text-warning">0</h2>
+                            <p class="card-text">Reuniones</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjetas de funcionalidades -->
+        <div class="row mt-5">
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm hover-shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-tasks fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Mis Tareas</h5>
+                        <p class="card-text">Gestiona tus tareas pendientes, en progreso y completadas.</p>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Tareas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm hover-shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-project-diagram fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title">Proyectos</h5>
+                        <p class="card-text">Administra tus proyectos y equipos de trabajo.</p>
+                        <a href="#" class="btn btn-success btn-sm">Ver Proyectos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm hover-sm">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-chart-bar fa-3x text-info"></i>
+                        </div>
+                        <h5 class="card-title">Reportes</h5>
+                        <p class="card-text">Genera reportes de avance y productividad.</p>
+                        <a href="#" class="btn btn-info btn-sm">Ver Reportes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm hover-shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-users fa-3x text-warning"></i>
+                        </div>
+                        <h5 class="card-title">Equipos</h5>
+                        <p class="card-text">Colabora con tu equipo en tiempo real.</p>
+                        <a href="#" class="btn btn-warning btn-sm">Ver Equipos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h1 class="display-4 text-dark mb-4">📊 Sistema de Gestión de Tareas</h1>
+            <p class="lead text-muted mb-4">Organiza, prioriza y completa tus tareas diarias de manera eficiente</p>
+
+            <!-- Características -->
+            <div class="row mt-5 mb-4">
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle fa-2x text-success mb-3"></i>
+                        <h5>Gestión Simple</h5>
+                        <p class="text-muted">Interfaz intuitiva para manejar tus tareas</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="fas fa-users fa-2x text-primary mb-3"></i>
+                        <h5>Trabajo en Equipo</h5>
+                        <p class="text-muted">Colabora con tus compañeros en proyectos</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line fa-2x text-info mb-3"></i>
+                        <h5>Seguimiento</h5>
+                        <p class="text-muted">Monitorea tu progreso y productividad</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="mt-4">
+                @Html.ActionLink("🚀 Comenzar Ahora - Iniciar Sesión", "Login", "Account", null, new { @class = "btn btn-primary btn-lg px-4 py-2 mr-3" })
+                @Html.ActionLink("📝 Crear Cuenta", "Register", "Account", null, new { @class = "btn btn-outline-primary btn-lg px-4 py-2" })
+            </div>
+        </div>
+    }
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📋 Tareas Pendientes</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.TareasPendientes != null && ViewBag.TareasPendientes.Count > 0)
+                    {
+                        <div class="list-group">
+                            @foreach (var tarea in ViewBag.TareasPendientes)
+                            {
+                                <div class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">@tarea.Titulo</h6>
+                                        <small class="badge @(tarea.Prioridad == "Alta" ? "badge-danger" : tarea.Prioridad == "Media" ? "badge-warning" : "badge-info")">
+                                            @tarea.Prioridad
+                                        </small>
+                                    </div>
+                                    <p class="mb-1 small text-muted">@(tarea.Descripcion?.Length > 100 ? tarea.Descripcion.Substring(0, 100) + "..." : tarea.Descripcion)</p>
+                                    <small>Vence: @(tarea.FechaFin?.ToString("dd/MM/yyyy") ?? "Sin fecha")</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                            <p class="text-muted">¡No tienes tareas pendientes! Buen trabajo.</p>
+                            <a href="#" class="btn btn-primary btn-sm">Crear Nueva Tarea</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">⚡ Acciones Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-plus-circle text-primary mr-2"></i>
+                                Crear Nueva Tarea
+                            </span>
+                            <i class="fas fa-chevron-right text-muted"></i>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-project-diagram text-success mr-2"></i>
+                                Iniciar Nuevo Proyecto
+                            </span>
+                            <i class="fas fa-chevron-right text-muted"></i>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-calendar text-info mr-2"></i>
+                                Ver Calendario
+                            </span>
+                            <i class="fas fa-chevron-right text-muted"></i>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-file-alt text-warning mr-2"></i>
+                                Generar Reporte
+                            </span>
+                            <i class="fas fa-chevron-right text-muted"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Agregar Font Awesome para los iconos -->
+@section Styles {
+    <style>
+        .hover-shadow:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        }
+
+        .feature-item {
+            padding: 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+        }
+
+        .jumbotron {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+}
